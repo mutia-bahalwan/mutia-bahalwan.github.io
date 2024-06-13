@@ -1,0 +1,5 @@
+.isi_produk{
+    display: flex;
+    flex-direction: row;
+}
+

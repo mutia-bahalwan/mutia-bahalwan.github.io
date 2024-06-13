@@ -1,0 +1,97 @@
+body {
+    font-family: "Poppins";
+    background-color: #f4f4f4;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    margin-left: 30px;
+}
+
+.container {
+    width: 100%;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.left-align {
+    text-align: left;
+}
+
+input[type="text"],
+input[type="email"],
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #c23f4f;
+    color: #fff;
+    cursor: pointer;
+    width: 300px;
+}
+
+button[type="submit"]:hover {
+    background-color: #a33c48;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    text-align: center;
+}
+
+.alert-failed {
+    color: #fff;
+    background-color: #d9544f73;
+    border-color: #d6e9c6;
+    text-align: center;
+}
+
+.error-message{
+    color: red;
+}

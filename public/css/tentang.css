@@ -1,0 +1,154 @@
+*{
+    font-family: 'Poppins';
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #c23f4f; 
+    color: white;
+    padding: 20px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin: 0;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    margin-left: 30px; 
+}
+
+.nav_links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_links a {
+    color: white; 
+    text-decoration: none; 
+    margin-right: 10px; 
+    margin-left: 10px;
+    transition: color 0.3s; 
+    padding-left: 30px;
+    font-size: 18px;
+}
+
+.nav_links a:hover {
+    color: lightgray;
+}
+
+.drop_down {
+    position: relative; 
+}
+
+.drop_down .drowdown_content {
+    display: none; 
+    position: absolute;
+    background-color: #c23f4f; 
+    min-width: 160px; 
+    z-index: 1; 
+    right: 0;
+}
+.drop_down:hover .drowdown_content {
+    display: block;
+}
+
+.drop_down .drowdown_content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none; 
+    display: block; 
+    font-size: 15px;
+}
+.drop_down .drowdown_content a:hover {
+    background-color: white;
+    color: black;
+}
+
+.fa-bars{
+    font-size: 20px;
+    color: white;
+    margin-right: 30px;
+}
+
+h3{
+    color: #c23f4f;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 30px;
+}
+
+hr{
+    border: 1px solid #bd626151;
+}
+
+.konten{
+    display: flex;
+    flex-direction: row;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.gambar{
+    display: flex;
+    flex-direction: column;
+}
+.gambar img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 2px;
+    border: 2px solid #BD6261;
+
+}
+
+.gambar1, .gambar2{
+    display: flex;
+}
+
+footer {
+    background: #BD6261;
+    border-radius: 50px 50px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.gambarFooter{
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.tentang-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.konten-footer, .jalan, .hak-cipta {
+    margin-bottom: 10px;
+}
+
+.konten-footer a{
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.konten-footer a, .jalan, .hak-cipta {
+    color: white;
+}
+
+.konten-footer a:hover {
+    opacity: 0.3;
+}

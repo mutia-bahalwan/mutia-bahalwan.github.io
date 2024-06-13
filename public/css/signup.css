@@ -1,0 +1,138 @@
+* {
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.hal-login {
+    border-radius: 15px;
+    min-width: 800px;
+    height: 500px;
+}
+
+.login {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    height: 150px;
+    width: 350px;
+    margin-right: 20px;
+}
+
+.isi {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 10px;
+    margin-left: 45px;
+}
+
+.fullkonten {
+    background: #c23f4f;
+    padding: 10px;
+    width: 400px;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+    color: white;
+}
+
+p {
+    margin: 10px;
+    font-weight: 600;
+    color: white;
+}
+
+hr {
+    border-top: 2px solid #F5DCD5;
+    margin: 10px;
+}
+
+button {
+    background-color: white;
+    border: none;
+    margin: 20px;
+    color: black;
+    height: 30px;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #F5DCD5;
+    color: white;
+}
+
+
+.signup {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 13px;
+
+}
+
+.signup p {
+    color: white;
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+.signup a {
+    color: white;
+}
+
+form input {
+    border: none;
+    margin-bottom: 10px;
+    background-color: #F5DCD5;
+    height: 30px;
+    border-radius: 10px;
+}
+
+input[type="text"]::placeholder {
+    padding: 10px;
+}
+
+form label {
+    color: white;
+    font-weight: 100;
+}
+
+img {
+    width: 100px;
+    margin-left: 130px;
+}
+
+.cancel {
+    background: #F5DCD5;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    display: flex;
+    border-radius: 4px;
+}
+
+.cancel a {
+    text-decoration: none;
+    font-size: 13px;
+    color: rgb(0,0,0,0.3);
+}
+
+.cancel a:hover{
+    color: rgb(0,0,0);
+}
