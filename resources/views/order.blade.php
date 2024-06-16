@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang</title>
+    <title>Order</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -68,7 +68,7 @@
             display: none;
             position: absolute;
             background-color: #c23f4f;
-            min-width: 160px;
+            min-width: 200px;
             z-index: 1;
             right: 0;
         }
@@ -82,7 +82,7 @@
             padding: 12px 16px;
             text-decoration: none;
             display: block;
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .drop_down .drowdown_content a:hover {
@@ -115,6 +115,10 @@
             font-size: 25px;
             text-align: center;
             margin-top: 30px;
+        }
+
+        .keranjang p{
+            font-size: 12px;
         }
 
         .status-badge {
@@ -174,6 +178,8 @@
                     <a href="/bawangmerah">Bawang Merah</a>
                     <a href="/bawangputih">Bawang Putih</a>
                     <a href="/bawangbombay">Bawang Bombay</a>
+                    <a href="/bundling_merahputih">Bundling Bawang Merah + Bawang Putih</a>
+                    <a href="/bundling_bombayputih">Bundling Bawang Bombay + Bawang Putih</a>
                 </div>
             </div>
             <a href="/cart">Keranjang</a>
@@ -195,7 +201,9 @@
     @endphp
     </header>
 
-    <div class="keranjang">Produk yang Telah Anda Beli</div>
+    <div class="keranjang">Produk yang Telah Anda Beli
+        <span><p>*Pembayaran bisa ditransfer melalui DANA (081235650928)</p></span>
+    </div>
     <hr>
     <div class="container">
         <table class="table table-striped">
@@ -213,51 +221,62 @@
             </thead>
             <tbody>
                 @foreach ($orders as $order)
-                    <tr>
-                        <td>
-                            <button class="btn btn-link toggle-details" data-order-id="{{ $order->id }}" style="background-color: #c23f4f; color: white;"><i class="fa fa-plus"></i></button>
-                        </td>
-                        <td colspan="7" style="font-weight: bold; color: #c23f4f;">Pembelian: {{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d') }} | Total: {{ rupiah($order->total_price) }}</td>
-
-                    </tr>
-                    <tr class="hidden-row" data-order-id="{{ $order->id }}">
-                        <td></td> <!-- Kolom kosong untuk tombol expand/collapse -->
-                        <td>{{ $order->orderDetails->first()->product->product_name }}</td>
-                        <td>{{ $order->orderDetails->first()->quantity }}</td>
-                        <td>{{ $order->orderDetails->first()->product->product_description }} ({{ $order->orderDetails->first()->product->jenis }})</td>
-                        <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d H:i:s') }}</td>
-                        <td><span class="status-badge">{{ $order->status }}</span></td>
-                        <td class="upload">
-                            @if ($order->bukti_pembayaran)
-                                <p>Bukti Pembayaran diunggah pada {{ $order->created_at->format('Y-m-d H:i:s') }}</p>
-                            @else
-                                <form action="{{ route('upload_bukti') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="order_id" value="{{ $order->id }}">
-                                    <div class="input-group mb-3">
-                                        <input type="file" name="bukti_pembayaran" accept="image/*" class="form-control">
-                                        <button type="submit" class="btn btn-primary btn-sm btn-upload">Unggah</button>
-                                    </div>
-                                </form>
-                            @endif
-                        </td>
-                    </tr>
-                    @php $first = true; @endphp
-                    @foreach ($order->orderDetails as $orderDetail)
-                        @if (!$first)
-                            <tr class="hidden-row" data-order-id="{{ $order->id }}">
-                                <td></td> <!-- Kolom kosong untuk tombol expand/collapse -->
-                                <td>{{ $orderDetail->product->product_name }}</td>
-                                <td>{{ $orderDetail->quantity }}</td>
-                                <td>{{ $orderDetail->product->product_description }} ({{ $orderDetail->product->jenis }})</td>
-                                <td>Rp {{ number_format($orderDetail->subtotal, 0, ',', '.') }}</td>
-                            </tr>
+                @php
+                    $totalPrice = 0;
+                    foreach ($order->orderDetails as $orderDetail) {
+                        $totalPrice += $orderDetail->subtotal;
+                    }
+                @endphp
+                <tr>
+                    <td>
+                        <button class="btn btn-link toggle-details" data-order-id="{{ $order->id }}" style="background-color: #c23f4f; color: white;"><i class="fa fa-plus"></i></button>
+                    </td>
+                    <td colspan="7">
+                        <div style="font-weight: bold; color: #c23f4f;">
+                            Pembelian: {{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d') }} | Total: <span id="total-price-{{ $order->id }}">{{ rupiah($totalPrice) }}</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Hidden row for detailed order information -->
+                <tr class="hidden-row" data-order-id="{{ $order->id }}">
+                    <td></td> <!-- Empty column for expand/collapse button -->
+                    <td>{{ $order->orderDetails->first()->product->product_name }}</td>
+                    <td>{{ $order->orderDetails->first()->quantity }}</td>
+                    <td>{{ $order->orderDetails->first()->product->product_description }} ({{ $order->orderDetails->first()->product->jenis }})</td>
+                    <td>Rp {{ number_format($totalPrice, 0, ',', '.') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d H:i:s') }}</td>
+                    <td><span class="status-badge">{{ $order->status }}</span></td>
+                    <td class="upload">
+                        @if ($order->bukti_pembayaran)
+                            <p>Bukti Pembayaran diunggah pada {{ $order->created_at->format('Y-m-d H:i:s') }}</p>
                         @else
-                            @php $first = false; @endphp
+                            <form action="{{ route('upload_bukti') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                <div class="input-group mb-3">
+                                    <input type="file" name="bukti_pembayaran" accept="image/*" class="form-control">
+                                    <button type="submit" class="btn btn-primary btn-sm btn-upload">Unggah</button>
+                                </div>
+                            </form>
                         @endif
-                    @endforeach
+                    </td>
+                </tr>
+                <!-- Loop through each order detail -->
+                @php $first = true; @endphp
+                @foreach ($order->orderDetails as $orderDetail)
+                    @if (!$first)
+                        <tr class="hidden-row" data-order-id="{{ $order->id }}">
+                            <td></td> <!-- Empty column for expand/collapse button -->
+                            <td>{{ $orderDetail->product->product_name }}</td>
+                            <td>{{ $orderDetail->quantity }}</td>
+                            <td>{{ $orderDetail->product->product_description }} ({{ $orderDetail->product->jenis }})</td>
+                            <td>Rp {{ number_format($orderDetail->subtotal, 0, ',', '.') }}</td>
+                        </tr>
+                    @else
+                        @php $first = false; @endphp
+                    @endif
                 @endforeach
+            @endforeach            
             </tbody>
         </table>
     </div>
@@ -283,5 +302,22 @@
             });
         });
     </script>
+
+<script>
+    @foreach ($orders as $order)
+        document.getElementById(`total-price-{{ $order->id }}`).textContent = formatRupiah({{ $order->total_price }});
+    @endforeach
+
+    function formatRupiah(angka) {
+        var reverse = angka.toString().split('').reverse().join('');
+        var ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+        return 'Rp' + ribuan;
+    }
+</script>
+
+
+
+
 </body>
 </html>

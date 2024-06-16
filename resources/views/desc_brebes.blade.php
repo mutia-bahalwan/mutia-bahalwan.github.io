@@ -60,7 +60,7 @@
             display: none; 
             position: absolute;
             background-color: #c23f4f; 
-            min-width: 160px; 
+            min-width: 200px; 
             z-index: 1; 
             right: 0;
         }
@@ -73,7 +73,7 @@
             padding: 12px 16px;
             text-decoration: none; 
             display: block; 
-            font-size: 15px;
+            font-size: 13px;
         }
         .drop_down .drowdown_content a:hover {
             background-color: white;
@@ -189,6 +189,8 @@
                     <a href="bawangmerah.blade.php">Bawang Merah</a>
                     <a href="bawangputih.blade.php">Bawang Putih</a>
                     <a href="bawangbombay.blade.php">Bawang Bombay</a>
+                    <a href="/bundling_merahputih">Bundling Bawang Merah + Bawang Putih</a>
+                    <a href="/bundling_bombayputih">Bundling Bawang Bombay + Bawang Putih</a>
                 </div>
             </div>
             <a href="/cart">Keranjang</a>

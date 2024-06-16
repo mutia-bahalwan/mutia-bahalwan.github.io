@@ -10,15 +10,17 @@
 </head>
 <body>
     <header>
-        <a href="beranda.blade.php"><img class="logo" src="images/2.png" alt="logo"></a>
+        <a href="/beranda"><img class="logo" src="images/2.png" alt="logo"></a>
         <nav class="nav_links">
-            <a href="beranda.blade.php">Beranda</a>
+            <a href="/beranda">Beranda</a>
             <div class="drop_down">
                 <a href="#">Kategori <i class="fa fa-caret-down"></i></a>
                 <div class="drowdown_content">
                     <a href="bawangmerah.blade.php">Bawang Merah</a>
                     <a href="bawangputih.blade.php">Bawang Putih</a>
                     <a href="bawangbombay.blade.php">Bawang Bombay</a>
+                    <a href="/bundling_merahputih">Bundling Bawang Merah + Bawang Putih</a>
+                    <a href="/bundling_bombayputih">Bundling Bawang Bombay + Bawang Putih</a>
                 </div>
             </div>
             <a href="/cart">Keranjang</a>

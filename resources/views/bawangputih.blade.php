@@ -60,7 +60,7 @@
             display: none; 
             position: absolute;
             background-color: #c23f4f; 
-            min-width: 160px; 
+            min-width: 200px; 
             z-index: 1; 
             right: 0;
         }
@@ -73,7 +73,7 @@
             padding: 12px 16px;
             text-decoration: none; 
             display: block; 
-            font-size: 15px;
+            font-size: 13px;
         }
         .drop_down .drowdown_content a:hover {
             background-color: white;
@@ -241,6 +241,26 @@
             opacity: 0.3;
         }
 
+        .alert {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        text-align: center;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
     </style>
 </head>
 <body>
@@ -254,6 +274,8 @@
                     <a href="/bawangmerah">Bawang Merah</a>
                     <a href="/bawangputih">Bawang Putih</a>
                     <a href="/bawangbombay">Bawang Bombay</a>
+                    <a href="/bundling_merahputih">Bundling Bawang Merah + Bawang Putih</a>
+                    <a href="/bundling_bombayputih">Bundling Bawang Bombay + Bawang Putih</a>
                 </div>
             </div>
             <a href="/cart">Keranjang</a>
@@ -268,6 +290,19 @@
             </div>
         </div>
     </header>
+
+    <p></p>
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
     <div class="eceran">
         <p class="tim-bawang">Tim Eceran</p>

@@ -25,6 +25,11 @@ class OrderController extends Controller
             return redirect()->route('cart.index')->with('error', 'Tidak ada produk yang dipilih.');
         }
 
+        $user = auth()->user();
+        if (empty($user->address)) {
+            return redirect()->route('cart.index')->with('error', 'Alamat harus diisi terlebih dahulu.');
+        }
+    
         $totalPrice = 0;
         $orderDetails = [];
 

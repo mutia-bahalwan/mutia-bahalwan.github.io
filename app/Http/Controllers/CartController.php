@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Cart;
 use App\Models\Product;
-use App\Models\User;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -15,7 +16,6 @@ class CartController extends Controller
     {
         // Ambil semua item dari keranjang
         $userCart = Cart::where('user_id', auth()->id())->get();
-        // dd($items);
         // Tampilkan halaman keranjang dengan data item
         return view('cart', compact('userCart'));
     }
@@ -34,7 +34,7 @@ class CartController extends Controller
     
         // Dapatkan produk berdasarkan ID
         $product = Product::findOrFail($request->product_id);
-    
+       
         // Tentukan jumlah pembelian berdasarkan jenis produk
         if ($product->jenis == 'Eceran') {
             $jumlah_pembelian = 1; // Jumlah pembelian untuk produk eceran
@@ -55,6 +55,7 @@ class CartController extends Controller
             // Jika produk sudah ada dalam keranjang, tambahkan jumlah pembelian
             $cartItem->jumlah_pembelian += $jumlah_pembelian;
             $cartItem->save();
+            session()->flash('success', 'Produk berhasil ditambahkan ke keranjang!');
         } else {
             // Jika produk belum ada dalam keranjang, tambahkan produk baru ke keranjang
             $cart = new Cart();
@@ -67,6 +68,7 @@ class CartController extends Controller
             $cart->product_name = $product->product_name;
             $cart->product_description = $product->product_description;
             $cart->save();
+            session()->flash('success', 'Produk berhasil ditambahkan ke keranjang!');
         }
     
         return redirect()->back();
@@ -75,13 +77,35 @@ class CartController extends Controller
     // Proses pembelian item dari keranjang belanja
     public function process(Request $request)
     {
-        // Lakukan proses pembelian item dari keranjang belanja sesuai kebutuhan
-        
+        // Dapatkan user yang sedang login
+        $user = Auth::user();
+
+        // Check if the user has an address
+        if (empty($user->address)) {
+            return redirect()->back()->with('error', 'Alamat pengiriman harus diisi.');
+        }
+
+        // Ambil semua item dari keranjang pengguna
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        // Kalkulasi total harga
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->price * $item->jumlah_pembelian;
+        });
+
+        // Buat entri pesanan baru
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->shipping_address = $user->address;
+        $order->total_price = $totalPrice;
+        $order->status = 'Menunggu pembayaran';
+        $order->save();
+
         // Hapus semua item dari keranjang setelah proses pembelian
-        Cart::truncate();
+        Cart::where('user_id', $user->id)->delete();
 
         // Redirect kembali ke halaman keranjang dengan pesan sukses
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Pesanan Anda telah diproses.');
     }
 
     // Menghapus item dari keranjang belanja

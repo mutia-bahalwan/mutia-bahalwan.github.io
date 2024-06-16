@@ -48,7 +48,7 @@ header {
     display: none; 
     position: absolute;
     background-color: #c23f4f; 
-    min-width: 160px; 
+    min-width: 200px; 
     z-index: 1; 
     right: 0;
 }
@@ -61,7 +61,7 @@ header {
     padding: 12px 16px;
     text-decoration: none; 
     display: block; 
-    font-size: 15px;
+    font-size: 13px;
 }
 .drop_down .drowdown_content a:hover {
     background-color: white;
